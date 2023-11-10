@@ -4,11 +4,12 @@ export default class ThreeDimensions {
   constructor(domId) {
     // 场景
     this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color("#ffffff");
     // 圆柱
-    const geometry = new THREE.CylinderGeometry(30, 30, 60);
+    const geometry = new THREE.CylinderGeometry(20, 20, 40);
     // 涂料
     const material = new THREE.MeshBasicMaterial({
-      color: "grey",
+      color: "yellow",
     });
     const material2 = new THREE.MeshBasicMaterial({
       color: "red",
@@ -25,18 +26,22 @@ export default class ThreeDimensions {
     const height = 300; //高度
     // 相机
     this.camera = new THREE.PerspectiveCamera(45, width / height, 1, 3000);
-    this.camera.position.set(0, 200, 200);
+    this.camera.position.set(0, 50, 100);
     this.camera.lookAt(0, 0, 0);
     // 渲染
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(width, height);
-    renderer.render(this.scene, this.camera);
+    this.renderer = new THREE.WebGLRenderer();
+    this.renderer.setSize(width, height);
+    this.renderer.render(this.scene, this.camera);
     this.threeDom = document.getElementById(domId);
-    this.threeDom.appendChild(renderer.domElement);
+    this.threeDom.appendChild(this.renderer.domElement);
   }
   camera;
   scene;
   threeDom;
+  renderer;
+  render = () => {
+    this.renderer.render(this.scene, this.camera);
+  };
 }
 export const getEventElement = (event, three) => {
   const vector3 = new THREE.Vector2(
